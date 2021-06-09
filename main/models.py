@@ -1,10 +1,13 @@
+import sys
+sys.path.append("..")
 from django.db import models
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from cloudinary.models import CloudinaryField
 
-# Create your models here.
+from users.models import User
+
 
 
 class Illness(models.Model):
@@ -62,5 +65,42 @@ class Drug(models.Model):
         return self.drug_name
 
 
+class Post(models.Model):
+    post = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+        
+    def save_post(self):
+        self.save()
 
-# posted_at = models.DateTimeField(auto_now_add=True, null=True)
+    def delete_post(self):
+        self.delete()
+        
+    @classmethod
+    def get_post_by_id(cls,id):
+        post =Post.objects.filter(pk=id)
+        return post
+            
+    def __str__(self):
+        return self.post
+    
+class Reply(models.Model):
+    reply = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    
+    def save_reply(self):
+        self.save()
+
+    def delete_reply(self):
+        self.delete()
+        
+    @classmethod
+    def get_reply_by_id(cls,id):
+        post =Post.objects.filter(pk=id)
+        return post
+            
+    def __str__(self):
+        return self.reply
+    
