@@ -97,9 +97,9 @@ class Reply(models.Model):
         self.delete()
         
     @classmethod
-    def get_reply_by_id(cls,id):
-        post =Post.objects.filter(pk=id)
-        return post
+    def get_replies_by_post(cls,id):
+        replies =Post.objects.filter(post=id).all()
+        return replies
             
     def __str__(self):
         return self.reply

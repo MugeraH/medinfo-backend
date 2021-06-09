@@ -91,3 +91,82 @@ class DrugSearchDetailView(APIView):
         serializer = DrugSerializer(drugs, many=True)
         return Response(serializer.data)
     
+class PostListView(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    generics.GenericAPIView):
+    serializer_class =  PostSerializer
+    queryset = Post.objects.all()
+    
+    def get(self,request,*args,**kwargs): 
+        return self.list(self,request,*args,**kwargs)
+    
+    def post(self,request,*args,**kwargs): 
+        return self.create(request,*args,**kwargs)
+    
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+    
+class PostDetailView(mixins.RetrieveModelMixin,
+                  mixins.UpdateModelMixin,
+                    mixins.DestroyModelMixin,
+                    generics.GenericAPIView):
+    serializer_class =  PostSerializer
+    queryset = Post.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+    
+    
+    
+    
+class ReplyListView(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    generics.GenericAPIView):
+    serializer_class =  ReplySerializer
+    queryset = Reply.objects.all()
+    
+    def get(self,request,*args,**kwargs): 
+        return self.list(self,request,*args,**kwargs)
+    
+    def post(self,request,*args,**kwargs): 
+        return self.create(request,*args,**kwargs)
+    
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+    
+class ReplyDetailView(mixins.RetrieveModelMixin,
+                  mixins.UpdateModelMixin,
+                    mixins.DestroyModelMixin,
+                    generics.GenericAPIView):
+    serializer_class =  ReplySerializer
+    queryset = Reply.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+    
+
+class PostReplyDetailView(APIView):
+    def get(self,request,id):
+       replies = Reply.get_replies_by_post(id)
+       serializer = ReplySerializer(replies, many=True)
+       return Response(serializer.data)
