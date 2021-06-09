@@ -48,7 +48,7 @@ class IllnessDetailView(mixins.RetrieveModelMixin,
 
 class IllnessSearchDetailView(APIView):
     def get(self,request,search_term):
-        illnesses = Illness.search_business_by_search_term(search_term)
+        illnesses = Illness.search_illness_by_search_term(search_term)
         serializer = IllnessSerializer(illnesses, many=True)
         return Response(serializer.data)
     
