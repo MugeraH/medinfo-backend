@@ -11,11 +11,11 @@ from users.models import User
 
 
 class Illness(models.Model):
-    illness_name = models.CharField(max_length=100)
+    illnessname = models.CharField(max_length=100)
     description=  models.TextField(null=True)
     image = CloudinaryField('image',null=True)
     symptoms = models.TextField(null=True)
-    recommndations = models.TextField(null=True)
+    recommendation = models.TextField(null=True)
     
     
     def save_illness(self):
