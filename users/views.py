@@ -23,27 +23,20 @@ class LoginView(APIView):
     def post(self,request):
         email = request.data['email']
         password = request.data['password']
-        
         user = User.objects.filter(email=email).first()
-        
         if user is None:
             raise AuthenticationFailed('User not found!')
-        
         if not user.check_password(password):
-            raise AuthenticationFailed('Incorrect password!')
-        
-        
+            raise AuthenticationFailed('Incorrect password!')  
         payload = {
             'id': user.id,
             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
             'iat': datetime.datetime.utcnow()
         }
-        
-        
+               
         token = jwt.encode(payload,'secret', algorithm='HS256')
         
         response = Response()
-        
         response.set_cookie(key='jwt',value=token,httponly=False)
         response.data = {
                     'jwt':token   
@@ -54,6 +47,7 @@ class LoginView(APIView):
 class UserView(APIView):
     def get(self,request):
         token = request.COOKIES.get('jwt')
+        print(token)
         
         if not token:
             raise AuthenticationFailed('Unauthenticated')

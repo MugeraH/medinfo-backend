@@ -31,7 +31,7 @@ class Illness(models.Model):
     
     @classmethod
     def search_illness_by_search_term(cls,search_term):
-        return cls.objects.filter(illness_name__icontains=search_term).all()
+        return cls.objects.filter(illnessname__icontains=search_term).all()
     
     
     def __str__(self):
