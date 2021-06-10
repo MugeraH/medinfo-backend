@@ -43,6 +43,7 @@ class Drug(models.Model):
     description=  models.TextField(null=True)
     usage_information = models.TextField(null=True)
     side_effects= models.TextField(null=True)
+    overCounter = models.BooleanField(default=False)
     
     
     def save_drug(self):
