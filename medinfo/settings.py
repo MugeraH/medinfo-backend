@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+     'corsheaders', 
     'main',
     'users',
     
@@ -44,7 +45,7 @@ INSTALLED_APPS = [
     'rest_framework',
      'rest_framework.authtoken',
      
-     'corsheaders',  
+     
     
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,15 +56,16 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-  'django.middleware.security.SecurityMiddleware',
+  'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-  'django.middleware.csrf.CsrfViewMiddleware',
-    'corsheaders.middleware.CorsPostCsrfMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+     'corsheaders.middleware.CorsPostCsrfMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+   
 ]
 
 ROOT_URLCONF = 'medinfo.urls'
@@ -146,20 +148,27 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
 
+CSRF_COOKIE_SECURE = True
+
+
 CORS_ORIGIN_ALLOW_ALL = True 
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [
-  
-    'http://localhost:4200',
-]
 
-CSRF_TRUSTED_ORIGINS = [
-    'localhost:4200',
-]
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SECURE = True
+
+
+CORS_ORIGIN_WHITELIST = (
+        'http://localhost:4200',
+      
+    )
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
     )
 }
 

@@ -40,6 +40,7 @@ class Illness(models.Model):
     
 class Drug(models.Model):
     drug_name = models.CharField(max_length=100)
+    type = models.CharField(max_length=100,null=True)
     description=  models.TextField(null=True)
     usage_information = models.TextField(null=True)
     side_effects= models.TextField(null=True)
@@ -59,7 +60,7 @@ class Drug(models.Model):
     
     @classmethod
     def search_drug_by_search_term(cls,search_term):
-        return cls.objects.filter(name__icontains=search_term).all()
+        return cls.objects.filter(drug_name__icontains=search_term).all()
     
     
     def __str__(self):
@@ -78,8 +79,8 @@ class Post(models.Model):
         self.delete()
         
     @classmethod
-    def get_post_by_id(cls,id):
-        post =Post.objects.filter(pk=id)
+    def get_post_by_user_id(cls,id):
+        post =Post.objects.filter(user=id)
         return post
             
     def __str__(self):

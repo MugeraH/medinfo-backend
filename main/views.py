@@ -87,7 +87,7 @@ class DrugDetailView(mixins.RetrieveModelMixin,
 
 class DrugSearchDetailView(APIView):
     def get(self,request,search_term):
-        drugs = Drug.search_business_by_search_term(search_term)
+        drugs = Drug.search_drug_by_search_term(search_term)
         serializer = DrugSerializer(drugs, many=True)
         return Response(serializer.data)
     
@@ -126,8 +126,11 @@ class PostDetailView(mixins.RetrieveModelMixin,
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
     
-    
-    
+class UserPostsView(APIView):
+    def get(self,request,id):
+        posts = Post.get_post_by_user_id(id)
+        serializer = PostSerializer( posts, many=True)
+        return Response(serializer.data)
     
 class ReplyListView(
     mixins.ListModelMixin,
@@ -170,3 +173,4 @@ class PostReplyDetailView(APIView):
        replies = Reply.get_replies_by_post(id)
        serializer = ReplySerializer(replies, many=True)
        return Response(serializer.data)
+

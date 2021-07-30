@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import IllnessListView,IllnessDetailView,IllnessSearchDetailView,DrugListView,DrugDetailView,DrugSearchDetailView,PostReplyDetailView,PostListView,PostDetailView,ReplyListView,ReplyDetailView
+from .views import IllnessListView,IllnessDetailView,IllnessSearchDetailView,DrugListView,DrugDetailView,DrugSearchDetailView,PostReplyDetailView,PostListView,PostDetailView,ReplyListView,ReplyDetailView,UserPostsView
 
 
 from rest_framework.urlpatterns import format_suffix_patterns
@@ -16,6 +16,7 @@ path('drug/<str:search_term>',DrugSearchDetailView.as_view(),name="searched-drug
 
 path('post',PostListView.as_view(),name="post-list"),  
 path('post/<int:pk>',PostDetailView.as_view(),name="post-detail"), 
+path('post/user/<int:id>',UserPostsView.as_view(),name="user-post-detail"), 
 
 path('reply',ReplyListView.as_view(),name="reply-list"),  
 path('reply/<int:pk>',ReplyDetailView.as_view(),name="reply-detail"), 
